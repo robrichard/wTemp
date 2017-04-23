@@ -123,7 +123,7 @@ void httpRequest() {
   client.stop();
 
   String data = String("{");
-  data += String("\"batteryLevel\":") + String((int)readVcc) + String(",");
+  data += String("\"batteryLevel\":") + String(readVcc()) + String(",");
   data += String("\"probeA\":") + String(thermister(A1)) + String(",");
   data += String("\"probeB\":") + String(thermister(A2));
   data += String("}");
@@ -150,22 +150,23 @@ void httpRequest() {
   }
 }
 
-int readVcc() {
+float readVcc() {
   float measuredvbat = analogRead(VBATPIN);
   measuredvbat *= 2;    // we divided by 2, so multiply back
   measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
   measuredvbat /= 1024; // convert to voltage
 
-  Serial.print("VBat: " ); Serial.println(measuredvbat);
-  if (measuredvbat < 3.2) {
-    return 0;
-  }
-  if (measuredvbat >= 3.2 && measuredvbat < 3.4) {
-    return 1;
-  }
-  if (measuredvbat >= 3.4 && measuredvbat < 3.7) {
-    return 2;
-  }
-  return 3;
+  return measuredvbat;
+//  Serial.print("VBat: " ); Serial.println(measuredvbat);
+//  if (measuredvbat < 3.2) {
+//    return 0;
+//  }
+//  if (measuredvbat >= 3.2 && measuredvbat < 3.4) {
+//    return 1;
+//  }
+//  if (measuredvbat >= 3.4 && measuredvbat < 3.7) {
+//    return 2;
+//  }
+//  return 3;
 }
 
